@@ -20,6 +20,7 @@ left_input = Input((784,))
 right_input = Input((784,))
 
 model = Sequential([
+    Dense(1024, activation='relu'),
     Dense(512, activation='relu'),
     Dense(256, activation='relu'),
     Dense(128, activation='relu'),
@@ -52,7 +53,7 @@ for i in range(300):
     np.random.shuffle(Xr)
     dist = np.abs(Xl - Xr).sum(axis=1)
     dist[dist<med_dist]=0
-    dist[dist>=med_dist]=1
+    dist[dist>=med_dist]=5
     siamese_net.fit([Xl, Xr], dist, epochs=1, batch_size=512)
     if i % 10 == 0:
         H = model.predict(X)
